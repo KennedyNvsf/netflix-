@@ -1,11 +1,58 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import "../banner/_banner.styles.scss";
 
-
+import axios from "../../axios";//make sure you import the file and not the global package here.
+import requests from '../../request';
 
 
 const Banner = () => {
 
+
+    
+
+    const [movie, setMovie] = useState([]);
+
+
+
+    //fetching the API data 
+    useEffect(() => {
+
+        async function fetchData() {
+
+            const request = await axios.get(requests.fetchNetflixOriginals);
+
+            setMovie(
+
+                request.data.results[
+
+                    Math.floor(Math.random() * request.data.results.length - 1)
+                ]
+
+                
+            );
+
+            
+            return request;
+            
+        };
+
+        
+        fetchData();
+
+        
+
+    }, []);
+
+    console.log(movie);
+   
+
+    
+   
+
+
+
+    //wrap the movie description text when it reachs a certain number
     const wrapDescription = (string, n) => {
 
         return string?.length > n ? string.substr(0, n - 1) + '...' : string;
