@@ -37,10 +37,7 @@ const Banner = () => {
             
         };
 
-        
         fetchData();
-
-        
 
     }, []);
 
@@ -49,14 +46,13 @@ const Banner = () => {
 
     
    
-
-
-
     //wrap the movie description text when it reachs a certain number
     const wrapDescription = (string, n) => {
 
         return string?.length > n ? string.substr(0, n - 1) + '...' : string;
     }
+
+
 
     return (
 
@@ -65,15 +61,15 @@ const Banner = () => {
 
             style = {{backgroundSize: "cover", 
             backgroundPosition: "center center", 
-            backgroundImage: `url("https://www.techtalkthai.com/wp-content/uploads/2020/03/netflix_banner_1.jpg")`}}>
+            backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`}}>
 
 
             <div className="bannerContents">
 
-                <h1 className="banner_title">Movie Name</h1>
+                <h1 className="banner_title"> {movie?.name || movie?.original_name || movie?.title} </h1>
 
                 
-                <h1 className="bannerDescription">{wrapDescription(`Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore dolore vitae repudiandae reprehenderit cum quos accusantium esse mollitia voluptatem neque. Pariatur, fugiat alias doloribus dolores blanditiis laboriosam cum ipsum consequatur necessitatibus? Maiores, suscipit unde rem voluptatum recusandae consequuntur sit earum vero cum impedit saepe commodi voluptas quo natus inventore voluptatibus.`, 100)}</h1>
+                <h1 className="bannerDescription">{wrapDescription(`${movie?.overview}`, 140)}</h1>
 
                 <div className="banner_buttons">
 
