@@ -1,21 +1,89 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './styles/app.css';
 
+//react router dom
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+//FIREBASE
+import { auth } from './firebase';
+// import db from './firebase';
 
 //COMPONENTS
-import HomeScreen from './components/homescreen/homescreen.component';
+import LoginPage from './pages/loginpage/loginpage.component';
+import HomeScreen from './pages/homescreen/homescreen.component';
+
+//REDUX
+import {useDispatch} from "react-redux";
+import {logout, user_Selector} from "./features/userSlice";
+import {login} from "./features/userSlice";
+import { useSelector } from 'react-redux';
 
 
 
 function App() {
 
+ const user = useSelector(user_Selector);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    const unsubscribe = auth.onAuthStateChanged(
+      
+      (userAuth) => {
+
+      if(userAuth){
+
+        //we are logged in
+        dispatch(
+            
+            login({
+
+              uid: userAuth.uid,
+              email: userAuth.email,
+
+            })
+          
+        );
+      
+      }else{
+
+        //we are logged out
+        dispatch(logout);
+      }
+
+    })
+
+    return unsubscribe;
+    
+  }, []);
+
+ 
 
   return (
 
     <div className="app">
 
-           <HomeScreen/>
+           <Router>
+
+             {!user ? (<LoginPage/>) : (
+
+              <Switch>
+              <Route exact path="/">
+                  <HomeScreen/>
+              </Route>
+              </Switch>
+
+
+             )}
+
+              
+
+           </Router>
      
     </div>
   );

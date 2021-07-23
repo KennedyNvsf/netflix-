@@ -8,12 +8,7 @@ import requests from '../../request';
 
 const Banner = () => {
 
-
-    
-
     const [movie, setMovie] = useState([]);
-
-
 
     //fetching the API data 
     useEffect(() => {
@@ -32,7 +27,6 @@ const Banner = () => {
                 
             );
 
-            
             return request;
             
         };
