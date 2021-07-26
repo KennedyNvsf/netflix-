@@ -12,9 +12,14 @@ import {
 import { auth } from './firebase';
 // import db from './firebase';
 
-//COMPONENTS
+//PAGES
 import LoginPage from './pages/loginpage/loginpage.component';
 import HomeScreen from './pages/homescreen/homescreen.component';
+import ProfileScreen from "./pages/profile/profile.component";
+
+//COMPONENTS
+
+
 
 //REDUX
 import {useDispatch} from "react-redux";
@@ -53,14 +58,14 @@ function App() {
       }else{
 
         //we are logged out
-        dispatch(logout);
+        dispatch(logout());
       }
 
     })
 
     return unsubscribe;
     
-  }, []);
+  }, [dispatch]);
 
  
 
@@ -73,6 +78,11 @@ function App() {
              {!user ? (<LoginPage/>) : (
 
               <Switch>
+
+              <Route path="/profile">
+                  <ProfileScreen/>
+              </Route>
+
               <Route exact path="/">
                   <HomeScreen/>
               </Route>
